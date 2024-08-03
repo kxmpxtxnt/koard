@@ -17,7 +17,7 @@ class PlayerQueueMoveTests {
 	private val third = TestPlayer("3")
 
 	private val queue = PlayerQueue(
-		listOf(first, second, third)
+		mutableListOf(first, second, third)
 	)
 
 	@Test
@@ -27,19 +27,19 @@ class PlayerQueueMoveTests {
 
 	@Test
 	fun `nextPlayer should be player second`() {
-		assertEquals(second, queue.nextPlayer)
+		assertEquals(second, queue.nextPlayer())
 	}
 
 	@Test
 	fun `index pointer should move`() {
 		assertEquals(first, queue.currentPlayer)
-		assertNotEquals(first, queue.nextPlayer)
+		assertNotEquals(first, queue.nextPlayer())
 		assertEquals(second, queue.currentPlayer)
 	}
 
 	@Test
 	fun `index pointer should not move when using nextPlayerPreview`() {
-		assertEquals(second, queue.nextPlayerPreview)
+		assertEquals(second, queue.nextPlayer(true))
 		assertEquals(first, queue.currentPlayer)
 	}
 }

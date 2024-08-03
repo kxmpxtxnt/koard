@@ -9,37 +9,17 @@ import kotlin.random.Random
  */
 @Serializable
 class PlayerQueue<T : Player>(
-	val players: List<T> = emptyList()
-) {
-
 	/**
 	 * Collection of all players in the game associated by their [index].
 	 * @see Player
 	 */
-	private val queue: MutableList<T> = players.toMutableList()
+	private val queue: MutableList<T> = mutableListOf(),
+) {
 
 	/**
 	 * Index which points to the [currentPlayer].
 	 */
 	private var index: Int = 0
-
-	/**
-	 * Get next player in [queue] and moves [index] pointer to next spot.
-	 * If the [queue] is at the end, the [index] will reset to 0
-	 * @see Player
-	 * @see PlayerQueue.index
-	 */
-	val nextPlayer: T
-		get() = queue.getOrNull(++index).let {
-			when (it != null) {
-				true -> it
-
-				false -> {
-					index = 0
-					nextPlayer
-				}
-			}
-		}
 
 	/**
 	 * Gets the current player pointed at by the [index].
@@ -50,41 +30,81 @@ class PlayerQueue<T : Player>(
 		get() = queue[index]
 
 	/**
-	 * Gets next player in [queue]. Will not move the [index] pointer.
+	 * Gets next player in [queue]. Depending on [preview] pointer will move.
+	 * @param preview Whether the [index] changes when getting the next player.
 	 * @see Player
+	 * @see PlayerQueue.index
 	 */
-	val nextPlayerPreview: T
-		get() = queue.getOrNull(index + 1).let {
+	fun nextPlayer(preview: Boolean = false): T {
+		return queue.getOrNull(if (preview) index + 1 else ++index).let {
 			when (it != null) {
 				true -> it
-				false -> queue[0]
+				else -> if (preview) queue[0] else run {
+					index = 0
+					nextPlayer(false)
+				}
 			}
 		}
+	}
 
 	/**
 	 * Adds given [player] to the [queue] at given [position].
 	 * @param position position which the player will be placed in the queue.
-	 * @param player Player to add to the given position to the queue.
+	 * @param player [Player] to add to the given [position] to the queue.
 	 * @see Player
 	 */
-	fun addPlayer(position: Int = queue.size, player: T) = queue.add(position, player)
+	fun addPlayer(position: Int = queue.size, player: T) {
+		queue.add(position, player)
+	}
 
 	/**
 	 * Operator function `queue += player` to simply add a [player] to the end of the [queue].
-	 * @param player Player to add to the queue.
+	 * @param player [Player] to add to the [queue].
 	 * @see Player
 	 * @see PlayerQueue.addPlayer
 	 */
 	operator fun plusAssign(player: T) = addPlayer(player = player)
 
 	/**
-	 * Operator function `queue[position] = player` to set player to special [position] in the [queue].
-	 * @param position position which the Player will be placed in the queue.
-	 * @param player Player to add to the given position to the queue.
+	 * Operator function `queue[position] = player` to set [player] to special [position] in the [queue].
+	 * @param position Position which the player will be placed in the [queue].
+	 * @param player [Player] to add to the given [position] to the queue.
 	 * @see Player
 	 * @see PlayerQueue.addPlayer
 	 */
 	operator fun set(position: Int, player: T) = addPlayer(position, player)
+
+	/**
+	 * Removes player by using the [index]
+	 * @param index Index at which the player will be removed.
+	 * @see PlayerQueue.index
+	 */
+	fun removePlayer(index: Int) {
+		queue.removeAt(index)
+	}
+
+	/**
+	 * Operator function `queue -= 2` to simply remove player at given [index].
+	 * @param index Index at which the player will be removed.
+	 * @see PlayerQueue.removePlayer
+	 */
+	operator fun minusAssign(index: Int) = removePlayer(index)
+
+	/**
+	 * Removes given [player] from [queue].
+	 * @param player Player to remove from the queue.
+	 * @see Player
+	 */
+	fun removePlayer(player: T) {
+		queue.remove(player)
+	}
+
+	/**
+	 * Operator function `queue -= player` to simply remove player at given [index].
+	 * @param player [Player] to remove from the [queue].
+	 * @see PlayerQueue.removePlayer
+	 */
+	operator fun minusAssign(player: T) = removePlayer(player)
 
 	/**
 	 * Operator function `queue[position]` to get player at given [position].
