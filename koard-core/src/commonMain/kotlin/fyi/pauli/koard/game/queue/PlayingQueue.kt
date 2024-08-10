@@ -32,14 +32,12 @@ abstract class PlayingQueue<Q : Queueable>(
    * @see Q
    * @see PlayingQueue.index
    */
-  fun next(preview: Boolean = false): Q {
-    return queue.getOrNull(if (preview) index + 1 else ++index).let {
-      when (it != null) {
-        true -> it
-        else -> if (preview) queue[0] else run {
-          index = 0
-          next(false)
-        }
+  fun next(preview: Boolean = false): Q = queue.getOrNull(if (preview) index + 1 else ++index).let {
+    when (it != null) {
+      true -> it
+      else -> if (preview) queue[0] else run {
+        index = 0
+        next(false)
       }
     }
   }
