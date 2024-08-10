@@ -1,15 +1,17 @@
 package fyi.pauli.koard.board.piece
 
+import fyi.pauli.koard.board.Position
 import kotlinx.serialization.Serializable
-import kotlin.random.Random
 
 @Serializable
 abstract class Piece {
-  abstract val identifier: Char
 
-  @Serializable
-  abstract class ColoredPiece : Piece() {
+	abstract val position: Position
+	abstract val identifier: Char
 
-    abstract val color: Color
-  }
+	@Serializable
+	abstract class ColoredPiece : Piece() {
+
+		abstract val color: Color
+	}
 }
