@@ -1,19 +1,15 @@
 package fyi.pauli.koard.game
 
+import fyi.pauli.koard.board.Board
 import fyi.pauli.koard.game.player.Player
-import fyi.pauli.koard.game.player.PlayerQueue
+import fyi.pauli.koard.game.queue.PlayingQueue
 import kotlinx.datetime.LocalDateTime
 
-abstract class Game<P: Player> {
+abstract class Game {
 
-	abstract val expiration: Result<LocalDateTime>
+	abstract val queue: PlayingQueue<*>
 
-	private val players: PlayerQueue<P> = PlayerQueue()
-
-	val currentPlayer: Player
-		get() = players.currentPlayer
-
-	val nextPlayer: Player
-		get() = players.nextPlayer
+	abstract val expiration: LocalDateTime?
+	abstract val board: Board
 
 }
