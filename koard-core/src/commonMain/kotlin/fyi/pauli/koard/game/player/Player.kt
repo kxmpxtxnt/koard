@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 abstract class Player : Queueable {
 
-	@Contextual
-	val uid: Uuid = uuid4()
+  @Contextual
+  val uid: Uuid = uuid4()
 
 }

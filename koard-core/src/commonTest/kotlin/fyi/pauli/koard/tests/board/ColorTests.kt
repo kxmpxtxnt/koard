@@ -7,21 +7,21 @@ import kotlin.test.assertFails
 
 class ColorTests {
 
-	@Test
-	fun badConfigurationShouldThrow() {
-		assertFails {
-			Color(244, 2, 256)
-		}
-	}
+  @Test
+  fun badConfigurationShouldThrow() {
+    assertFails {
+      Color(244, 2, 256)
+    }
+  }
 
-	@Test
-	fun `rgb to hex`() {
-		assertEquals(Color(66, 245, 155).hex, "#42f59b")
-	}
+  @Test
+  fun `rgb to hex`() {
+    assertEquals(Color(66, 245, 155).hex, "#42f59b")
+  }
 
-	@Test
-	fun `color from hex`() {
-		assertEquals(Color("#42f59b"), Color(66, 245, 155))
-	}
+  @Test
+  fun `color from hex`() {
+    assertEquals(Color("#42f59b"), Color(66, 245, 155))
+  }
 }
 

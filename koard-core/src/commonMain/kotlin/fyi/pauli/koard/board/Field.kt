@@ -2,6 +2,6 @@ package fyi.pauli.koard.board
 
 abstract class Field {
 
-	abstract val position: Position
+  abstract val position: Position
 
 }

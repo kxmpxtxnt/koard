@@ -24,11 +24,13 @@ dependencyResolutionManagement {
       library("kotlin.test.common", "org.jetbrains.kotlin", "kotlin-test-common").versionRef("kotlin")
       library("kotlin.test.annotations", "org.jetbrains.kotlin", "kotlin-test-annotations-common").versionRef("kotlin")
 
-      bundle("kotlin.testing", listOf(
-        "kotlin.test",
-        "kotlin.test.common",
-        "kotlin.test.annotations"
-      ))
+      bundle(
+        "kotlin.testing", listOf(
+          "kotlin.test",
+          "kotlin.test.common",
+          "kotlin.test.annotations"
+        )
+      )
 
       library("kotlinx.json", "org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.7.1")
       library("kotlinx.datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.6.0")
